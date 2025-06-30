@@ -1,0 +1,21 @@
+# Ignore model files
+*.pt
+*.ckpt
+
+# Ignore HDF5 datasets
+*.h5
+
+# Ignore outputs
+outputs/
+*.csv
+
+# Python cache files
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# System files
+.DS_Store
+
