@@ -115,6 +115,7 @@ class MACEOFF_Inference:
         return pd.concat(interaction_energies, ignore_index=True)
 
     def save_results(self, final_df: pd.DataFrame):
+        os.makedirs("outputs", exist_ok=True)
         final_df.to_csv(f'{self.__class__.__name__}_{self.ds_name}_intE.csv', index=False)
 
 if __name__ == "__main__":

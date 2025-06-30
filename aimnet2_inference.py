@@ -6,7 +6,7 @@ import h5py
 from tqdm import tqdm
 from typing import Dict
 import time
-from torch.amp import autocast         # For mixed precision
+from torch.amp import autocast              # For mixed precision
 
 class AIMNet2_Inference:
     BATCH_SIZE = 1000                       # Adjust this for optimal GPU usage
@@ -76,15 +76,14 @@ class AIMNet2_Inference:
 
     def model_inference(self, data: Dict[str, torch.Tensor]) -> np.ndarray:
         
-        #Perform inference using the AIMNet2 model with autocast for mixed precision.
-        with torch.no_grad(), autocast(device_type='cuda'):   # Mixed precision enabled
+        with torch.no_grad(), autocast(device_type='cuda'):                     
             output = self.model(data)       
-        energy = output['energy'].detach().cpu().numpy().flatten() * 23.0609  # Convert energy and move to CPU
+        energy = output['energy'].detach().cpu().numpy().flatten() * 23.0609    
         return energy
 
     def batch_model_inference(self, data_list: Dict[str, torch.Tensor]) -> np.ndarray:
         
-        #Perform batched inference for better performance, ensuring async data transfers and mixed precision.
+        #Perform batched inference for faster performance, ensuring async data transfers and mixed precision
         energies = []
         for i in range(0, len(data_list['coord']), self.BATCH_SIZE):
             batch_data = {
@@ -97,7 +96,7 @@ class AIMNet2_Inference:
         return np.concatenate(energies)
 
     def run_inference(self) -> Dict[str, pd.DataFrame]:
-        torch.cuda.synchronize()            # Ensure all operations are done before timing
+        torch.cuda.synchronize()                            # Ensure all operations are done before timing
         start_time = time.time()
         interaction_energies = []
         for group_name, group_data in tqdm(self.data_dict.items(), desc="Running AIMNet2 model inference"):
@@ -123,13 +122,14 @@ class AIMNet2_Inference:
                 df['group'] = group_name
                 interaction_energies.append(df)
 
-        torch.cuda.synchronize()            # Ensure all GPU tasks are done before stopping the time
+        torch.cuda.synchronize()                            # Ensure all GPU tasks are done before stopping the time
         end_time = time.time()
 
         print(f"AIMNet2 inference time for {self.ds_name}: {end_time - start_time:.2f} seconds")
         return pd.concat(interaction_energies, ignore_index=True)
 
     def save_results(self, final_df: pd.DataFrame):
+        os.makedirs("outputs", exist_ok=True)
         final_df.to_csv(f'{self.__class__.__name__}_{self.ds_name}_intE.csv', index=False)
 
 if __name__ == "__main__":
