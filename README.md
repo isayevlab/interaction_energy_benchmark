@@ -28,13 +28,18 @@ No model training or development is included — this repo is strictly for **inf
 
 ## 🚀 Usage
 
-### Run inference:
+### Run inference for a single dataset:
 ```bash
 python run_inference.py \
   --model_type {aimnet2 or maceoff} \
   --model_path models/{your desired model} \
   --h5_path datasets/sample_dataset.h5 \
   --ds_name sample_dataset
+```
+
+### Run inference for multiple datasets at once:
+```bash
+python batched_inference.py
 ```
 
 ### Evaluate results:
