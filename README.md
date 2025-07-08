@@ -15,7 +15,9 @@ No model training or development is included — this repo is strictly for **inf
 ├── outputs/               # Inference result csv files will be saved here
 ├── aimnet2_inference.py   # AIMNet2 inference pipeline
 ├── maceoff_inference.py   # MACE-OFF inference pipeline
-├── run_inference.py       # Unified command-line entry point
+├── run_inference.py       # Unified command-line to run inference
+├── batched_inference.py   # Inference script for multiple datasets at once (via configuration file)
+├── config.yaml       	   # Configuration yaml file for datasets/modeltype/modelpath/etc.
 ├── evaluate_metrics.py    # Script to evaluate predicted vs reference interaction energies
 ├── README.md              # This file
 ├── .gitignore             # Git ignore rules

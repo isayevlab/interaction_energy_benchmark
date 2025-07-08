@@ -1,0 +1,14 @@
+datasets:
+  - name: "S66x8"
+    model_type: "maceoff"
+    model_path: "./models/maceoff/MACE-OFF24_medium.model"
+    h5_path: "./datasets/neutral/S66x8.h5"
+  - name: "S66x8"
+    model_type: "aimnet2"
+    model_path: "./models/aimnet2/aimnet2_2025_b973c_d3_0.jpt"
+    h5_path: "./datasets/neutral/S66x8.h5"
+# to add more datasets, copy the block above and update the fields accordingly (example shown below)
+  - name: "dataset"
+    model_type: "aimnet2"
+    model_path: "./models/aimnet2/aimnet2_2025_b973c_d3_0.jpt"
+    h5_path: "./datasets/neutral/dataset.h5"

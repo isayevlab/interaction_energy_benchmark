@@ -1,6 +1,6 @@
 import argparse
 import os
-from aimnet2_inference import AIMNet2_Inference
+from aimnet2_inference import AIMNET2_Inference
 from maceoff_inference import MACEOFF_Inference
 
 def main():
@@ -19,7 +19,7 @@ def main():
         if not args.model_path or not os.path.isfile(args.model_path):
             raise ValueError("A valid --model_path must be provided for AIMNet2 model")
         print(f"Running AIMNet2 on dataset: {args.ds_name}")
-        model = AIMNet2_Inference(args.model_path, args.h5_path, args.ds_name)
+        model = AIMNET2_Inference(args.model_path, args.h5_path, args.ds_name)
         results = model.run_inference()
         model.save_results(results)
 

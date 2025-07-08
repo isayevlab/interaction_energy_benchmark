@@ -15,8 +15,8 @@ def evaluate_metrics(df: pd.DataFrame) -> dict:
 
     return {
         'R2': r2,
-        'RMSE': rmse,
-        'MAE': mae
+        'RMSE (kcal/mol)': rmse,
+        'MAE (kcal/mol)': mae
     }
 
 def main():

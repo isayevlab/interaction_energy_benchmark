@@ -1,3 +1,4 @@
+import os
 import sys
 import numpy as np
 import pandas as pd
@@ -116,7 +117,7 @@ class MACEOFF_Inference:
 
     def save_results(self, final_df: pd.DataFrame):
         os.makedirs("outputs", exist_ok=True)
-        final_df.to_csv(f'{self.__class__.__name__}_{self.ds_name}_intE.csv', index=False)
+        final_df.to_csv(f'outputs/{self.__class__.__name__}_{self.ds_name}_intE.csv', index=False)
 
 if __name__ == "__main__":
     model_path, h5_path, ds_name = sys.argv[1:4]
