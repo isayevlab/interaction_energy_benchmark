@@ -9,6 +9,9 @@
 outputs/
 *.csv
 
+# Ignore swap files
+*.swp
+
 # Python cache files
 __pycache__/
 *.pyc
