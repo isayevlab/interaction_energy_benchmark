@@ -2,9 +2,6 @@
 *.pt
 *.ckpt
 
-# Ignore HDF5 datasets
-*.h5
-
 # Ignore swap files
 *.swp
 
