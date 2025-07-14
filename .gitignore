@@ -5,12 +5,12 @@
 # Ignore HDF5 datasets
 *.h5
 
+# Ignore swap files
+*.swp
+
 # Ignore outputs
 outputs/
 *.csv
-
-# Ignore swap files
-*.swp
 
 # Python cache files
 __pycache__/
