@@ -1,0 +1,21 @@
+datasets:
+  - name: "AHB21"
+    h5_path: "./datasets/charged/AHB21.h5"
+  - name: "DES370K-AIMNet2-elements"
+    h5_path: "./datasets/charged/DES370K-AIMNet2-elements.h5"
+  - name: "IL16"
+    h5_path: "./datasets/charged/IL16.h5"
+  - name: "Ionic_H_bonds"
+    h5_path: "./datasets/charged/Ionic_H_bonds.h5"
+  - name: "NCIA_IHB100x10"
+    h5_path: "./datasets/charged/NCIA_IHB100x10.h5"
+  - name: "S12L"
+    h5_path: "./datasets/charged/S12L.h5"
+
+models:
+  - type: "aimnet2"
+    path: "./models/aimnet2/aimnet2_2025_b973c_d3_0.jpt"
+  - type: "aimnet2"
+    path: "./models/aimnet2/aimnet2_b973c_d3_0.jpt"  
+  - type: "aimnet2"
+    path: "./models/aimnet2/aimnet2_wb97m_d3_0.jpt"  

@@ -1,4 +1,5 @@
 import yaml
+import argparse
 import subprocess
 import pandas as pd
 import os
@@ -20,37 +21,51 @@ def run_evaluation(csv_path):
     return evaluate_metrics(df)
 
 def main():
-    with open("config.yaml", "r") as file:
+    parser = argparse.ArgumentParser(description="Run batched inference using multiple models on multiple datasets")
+    parser.add_argument('--dataset_type', type=str, required=True, choices=['neutral', 'charged'], 
+            help = 'Dataset type to use: neutral or charged')
+    args = parser.parse_args()
+
+    if args.dataset_type == 'neutral':
+        config_file = "config_neutral.yaml"
+        final_df_name = "metrics_summary_neutral.csv"
+    elif args.dataset_type == 'charged':
+        config_file = "config_charged.yaml"
+        final_df_name = "metrics_summary_charged.csv"
+
+    with open(config_file, "r") as file:
         config = yaml.safe_load(file)
 
     results = []
 
     for dataset in config["datasets"]:
         name = dataset["name"]
-        model_type = dataset["model_type"]
-        model_path = dataset["model_path"]
         h5_path = dataset["h5_path"]
 
-        # run inference
-        run_inference(model_type, model_path, h5_path, name)
-        csv_file = f"{model_type.upper()}_Inference_{name}_intE.csv"
-        csv_path = os.path.join("outputs", csv_file)
+        for model in config["models"]:
+            model_type = model["type"]
+            model_path = model["path"]
 
-        if not os.path.exists(csv_path):
-            print(f" Missing output CSV: {csv_path}, skipping evaluation.")
-            continue
-
-        # run evaluation
-        metrics = run_evaluation(csv_path)
-        metrics["Dataset"] = name
-        metrics["ModelType"] = model_type
-        metrics["ModelName"] = os.path.basename(model_path)
-        results.append(metrics)
+            # run inference
+            run_inference(model_type, model_path, h5_path, name)
+            csv_file = f"{model_type.upper()}_Inference_{name}_intE.csv"
+            csv_path = os.path.join("outputs", csv_file)
+    
+            if not os.path.exists(csv_path):
+                print(f" Missing output CSV: {csv_path}, skipping evaluation.")
+                continue
+    
+            # run evaluation
+            metrics = run_evaluation(csv_path)
+            metrics["Dataset"] = name
+            metrics["ModelType"] = model_type
+            metrics["ModelName"] = os.path.basename(model_path)
+            results.append(metrics)
 
     # save all results to a pandas dataframe
     final_df = pd.DataFrame(results)
     final_df = final_df[["Dataset", "ModelType", "ModelName", "R2", "RMSE (kcal/mol)", "MAE (kcal/mol)"]]
-    final_df.to_csv("metrics_summary.csv", index=False)
+    final_df.to_csv(final_df_name, index=False)
 
 if __name__ == "__main__":
     main()
