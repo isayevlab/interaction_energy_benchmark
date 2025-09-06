@@ -1,6 +1,6 @@
 # Molecular Interaction Energy Inference
 
-This repository provides a unified interface to run **inference** using **AIMNet2** or **MACE-OFF** models on molecular dimer systems stored in HDF5 format.
+This repository provides a unified interface to run **inference** using **AIMNet2**, **MACE-OFF** or **MACE-OMOL** models on molecular dimer systems stored in HDF5 format.
 
 No model training or development is included — this repo is strictly for **inference using pre-trained models**.
 
@@ -10,14 +10,16 @@ No model training or development is included — this repo is strictly for **inf
 
 ```
 .
-├── models/                # Pre-trained AIMNet2/MACE-OFF models
-├── datasets/              # Input datasets in HDF5 format
+├── models/                # Pre-trained AIMNet2/MACE-OFF/MACE-OMOL models
 ├── outputs/               # Inference result csv files will be saved here
+├── datasets.tar.gz        # Input datasets in HDF5 format
 ├── aimnet2_inference.py   # AIMNet2 inference pipeline
 ├── maceoff_inference.py   # MACE-OFF inference pipeline
+├── maceomol_inference.py  # MACE-OMOL inference pipeline
 ├── run_inference.py       # Unified command-line to run inference
 ├── batched_inference.py   # Inference script for multiple datasets at once (via configuration file)
-├── config.yaml       	   # Configuration yaml file for datasets/modeltype/modelpath/etc.
+├── config_charged.yaml    # Configuration yaml file for charged datasets, modeltype and modelpath, etc.
+├── config_neutral.yaml    # Configuration yaml file for neutral datasets, modeltype and modelpath, etc.
 ├── evaluate_metrics.py    # Script to evaluate predicted vs reference interaction energies
 ├── README.md              # This file
 ├── .gitignore             # Git ignore rules
@@ -31,7 +33,7 @@ No model training or development is included — this repo is strictly for **inf
 ### Run inference for a single dataset:
 ```bash
 python run_inference.py \
-  --model_type {aimnet2 or maceoff} \
+  --model_type {aimnet2 or maceoff or maceomol} \
   --model_path models/{your desired model} \
   --h5_path datasets/sample_dataset.h5 \
   --ds_name sample_dataset
@@ -39,7 +41,7 @@ python run_inference.py \
 
 ### Run inference for multiple datasets at once:
 ```bash
-python batched_inference.py
+python batched_inference.py --dataset_type {charged or neutral}
 ```
 
 ### Evaluate results:
