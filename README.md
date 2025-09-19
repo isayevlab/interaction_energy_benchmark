@@ -10,20 +10,21 @@ No model training or development is included — this repo is strictly for **inf
 
 ```
 .
-├── models/                # Pre-trained AIMNet2/MACE-OFF/MACE-OMOL models
-├── outputs/               # Inference result csv files will be saved here
-├── datasets.tar.gz        # Input datasets in HDF5 format
-├── aimnet2_inference.py   # AIMNet2 inference pipeline
-├── maceoff_inference.py   # MACE-OFF inference pipeline
-├── maceomol_inference.py  # MACE-OMOL inference pipeline
-├── run_inference.py       # Unified command-line to run inference
-├── batched_inference.py   # Inference script for multiple datasets at once (via configuration file)
-├── config_charged.yaml    # Configuration yaml file for charged datasets, modeltype and modelpath, etc.
-├── config_neutral.yaml    # Configuration yaml file for neutral datasets, modeltype and modelpath, etc.
-├── evaluate_metrics.py    # Script to evaluate predicted vs reference interaction energies
-├── README.md              # This file
-├── .gitignore             # Git ignore rules
-└── requirements.txt       # Python dependencies
+├── models/                			# Pre-trained AIMNet2/MACE-OFF/MACE-OMOL models
+├── outputs/               			# Inference result csv files will be saved here
+├── datasets.tar.gz        			# Input datasets in HDF5 format (compressed format)
+├── aimnet2_inference.py   			# AIMNet2 inference pipeline
+├── maceoff_inference.py   			# MACE-OFF inference pipeline
+├── maceomol_inference.py  			# MACE-OMOL inference pipeline
+├── run_inference.py       			# Unified command-line to run inference
+├── batched_inference.py   			# Inference script for multiple datasets at once (via configuration file)
+├── config_charged.yaml    			# Configuration yaml file for charged datasets, model type and path, etc.
+├── config_neutral_aimnet2_supported.yaml    	# Configuration yaml file for neutral datasets (AIMNet2), model type and path, etc.
+├── config_neutral_others.yaml    		# Configuration yaml file for neutral datasets (Others), model type and path, etc.
+├── evaluate_metrics.py    			# Script to evaluate predicted vs reference interaction energies
+├── README.md              			# This file
+├── .gitignore             			# Git ignore rules
+└── requirements.txt       			# Python dependencies
 ```
 
 ---
@@ -41,7 +42,7 @@ python run_inference.py \
 
 ### Run inference for multiple datasets at once:
 ```bash
-python batched_inference.py --dataset_type {charged or neutral}
+python batched_inference.py --dataset_type {charged or neutral_aimnet2_supported or neutral_others}
 ```
 
 ### Evaluate results:

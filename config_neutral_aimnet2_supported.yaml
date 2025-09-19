@@ -1,0 +1,15 @@
+datasets:
+  - name: "NCIA_D442x10-AIMNet2-elements"
+    h5_path: "./datasets/neutral/aimnet2_supported/NCIA_D442x10-AIMNet2-elements.h5"
+  - name: "NCIA_R739x5-AIMNet2-elements"
+    h5_path: "./datasets/neutral/aimnet2_supported/NCIA_R739x5-AIMNet2-elements.h5"
+  - name: "NCIA_SH250x10-AIMNet2-elements"
+    h5_path: "./datasets/neutral/aimnet2_supported/NCIA_SH250x10-AIMNet2-elements.h5"
+ 
+models:
+  - type: "aimnet2"
+    path: "./models/aimnet2/aimnet2_2025_b973c_d3_0.jpt"
+  - type: "aimnet2"
+    path: "./models/aimnet2/aimnet2_b973c_d3_0.jpt"  
+  - type: "aimnet2"
+    path: "./models/aimnet2/aimnet2_wb97m_d3_0.jpt"  
