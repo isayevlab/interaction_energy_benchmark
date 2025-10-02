@@ -1,5 +1,4 @@
 # Ignore model files
-*.pt
 *.ckpt
 
 # Ignore swap files
