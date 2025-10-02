@@ -3,11 +3,12 @@ import os
 from aimnet2_inference import AIMNET2_Inference
 from maceoff_inference import MACEOFF_Inference
 from maceomol_inference import MACEOMOL_Inference
+from umaomol_inference import UMAOMOL_Inference
 
 def main():
-    parser = argparse.ArgumentParser(description="Run inference using AIMNet2, MACE-OFF or MACE-OMOL models")
-    parser.add_argument('--model_type', type=str, required=True, choices=['aimnet2', 'maceoff', 'maceomol'],
-                        help='Model type to use: aimnet2, maceoff or maceomol')
+    parser = argparse.ArgumentParser(description="Run inference using AIMNet2, MACE-OFF, MACE-OMOL or UMA-OMOL models")
+    parser.add_argument('--model_type', type=str, required=True, choices=['aimnet2', 'maceoff', 'maceomol', 'umaomol'],
+                        help='Model type to use: aimnet2, maceoff, maceomol or umaomol')
     parser.add_argument('--model_path', type=str, default=None,
                         help='File path for the intended model')
     parser.add_argument('--h5_path', type=str, required=True,
@@ -40,6 +41,13 @@ def main():
         results = model.run_inference()
         model.save_results(results)
 
+    elif args.model_type == 'umaomol':
+        if not args.model_path or not os.path.isfile(args.model_path):
+            raise ValueError("A valid --model_path must be provided for UMA-OMOL model")
+        print(f"Running UMA-OMOL on dataset: {args.ds_name}")
+        model = UMAOMOL_Inference(args.model_path, args.h5_path, args.ds_name)
+        results = model.run_inference()
+        model.save_results(results)
 
 if __name__ == "__main__":
     main()

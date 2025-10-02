@@ -51,3 +51,5 @@ models:
     path: "./models/maceoff/MACE-OFF24_medium.model"
   - type: "maceomol"
     path: "./models/maceomol/MACE-omol-0-extra-large-1024.model"
+  - type: "umaomol"
+    path: "./models/umaomol/uma-s-1p1.pt"

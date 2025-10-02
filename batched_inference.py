@@ -22,16 +22,25 @@ def run_evaluation(csv_path):
 
 def main():
     parser = argparse.ArgumentParser(description="Run batched inference using multiple models on multiple datasets")
-    parser.add_argument('--dataset_type', type=str, required=True, choices=['neutral', 'charged'], 
-            help = 'Dataset type to use: neutral or charged')
+    parser.add_argument('--dataset_type', type=str, required=True, choices=['neutral_aimnet2_supported', 
+        'neutral_others', 'charged_aimnet2_supported', 'charged_uma_supported'], 
+            help = 'Dataset type to use: neutral_aimnet2_supported, neutral_others, 
+            charged_aimnet2_supported, charged_uma_supported')
     args = parser.parse_args()
 
-    if args.dataset_type == 'neutral':
-        config_file = "config_neutral.yaml"
-        final_df_name = "metrics_summary_neutral.csv"
-    elif args.dataset_type == 'charged':
-        config_file = "config_charged.yaml"
-        final_df_name = "metrics_summary_charged.csv"
+    if args.dataset_type == 'neutral_aimnet2_supported':
+        config_file = "config_neutral_aimnet2_supported.yaml"
+        final_df_name = "metrics_summary_neutral_aimnet2_supported.csv"
+    elif args.dataset_type == 'neutral_others':
+        config_file = "config_neutral_others.yaml"
+        final_df_name = "metrics_summary_neutral_others.csv"
+    elif args.dataset_type == 'charged_aimnet2_supported':
+        config_file = "config_charged_aimnet2_supported.yaml"
+        final_df_name = "metrics_summary_charged_aimnet2_supported.csv"
+    elif args.dataset_type == 'charged_uma_supported':
+        config_file = "config_charged_uma_supported.yaml"
+        final_df_name = "metrics_summary_charged_uma_supported.csv"
+
 
     with open(config_file, "r") as file:
         config = yaml.safe_load(file)
