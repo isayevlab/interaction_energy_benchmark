@@ -31,10 +31,12 @@ datasets:
     h5_path: "./datasets/neutral/others/sulfurx8.h5"
   - name: "X40x10"
     h5_path: "./datasets/neutral/others/X40x10.h5"
- 
+  - name: "NENCI-2021-MACEOFF23-elements"
+    h5_path: "./datasets/neutral/others/NENCI-2021-MACEOFF23-elements.h5"
+
 models:
   - type: "aimnet2"
-    path: "./models/aimnet2/aimnet2_2025_b973c_d3_0.jpt"
+    path: "./models/aimnet2/aimnet2_2025_b973c_d3_2.jpt"
   - type: "aimnet2"
     path: "./models/aimnet2/aimnet2_b973c_d3_0.jpt"  
   - type: "aimnet2"

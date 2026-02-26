@@ -3,8 +3,8 @@ datasets:
     h5_path: "./datasets/charged/Ionic_H_bonds.h5"
   - name: "NCIA_IHB100x10"
     h5_path: "./datasets/charged/NCIA_IHB100x10.h5"
-  - name: "S12L"
-    h5_path: "./datasets/charged/S12L.h5"
+  - name: "S12L-AIMNet2-elements"
+    h5_path: "./datasets/charged/S12L-AIMNet2-elements.h5"
 
 models:
   - type: "umaomol"

@@ -8,10 +8,12 @@ datasets:
  
 models:
   - type: "aimnet2"
-    path: "./models/aimnet2/aimnet2_2025_b973c_d3_0.jpt"
+    path: "./models/aimnet2/aimnet2_2025_b973c_d3_2.jpt"
   - type: "aimnet2"
     path: "./models/aimnet2/aimnet2_b973c_d3_0.jpt"  
   - type: "aimnet2"
     path: "./models/aimnet2/aimnet2_wb97m_d3_0.jpt" 
+  - type: "maceomol"
+    path: "./models/maceomol/MACE-omol-0-extra-large-1024.model"
   - type: "umaomol"
     path: "./models/umaomol/uma-s-1p1.pt"
