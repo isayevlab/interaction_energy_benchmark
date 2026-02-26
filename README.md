@@ -24,6 +24,7 @@ No model training or development is included — this repo is strictly for **inf
 ├── config_neutral_aimnet2_supported.yaml    	# Configuration yaml file for neutral datasets (AIMNet2), model type and path, etc.
 ├── config_neutral_others.yaml    		# Configuration yaml file for neutral datasets (Others), model type and path, etc.
 ├── evaluate_metrics.py    			# Script to evaluate predicted vs reference interaction energies
+├── run.sh		    			# SLURM Script to run batched inference
 ├── README.md              			# This file
 ├── .gitignore             			# Git ignore rules
 └── requirements.txt       			# Python dependencies
