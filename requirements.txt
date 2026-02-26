@@ -3,5 +3,7 @@ numpy
 pandas
 h5py
 tqdm
+pyyaml
 ase
 mace-torch
+fairchem-core
