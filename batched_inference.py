@@ -24,8 +24,7 @@ def main():
     parser = argparse.ArgumentParser(description="Run batched inference using multiple models on multiple datasets")
     parser.add_argument('--dataset_type', type=str, required=True, choices=['neutral_aimnet2_supported', 
         'neutral_others', 'charged_aimnet2_supported', 'charged_uma_supported'], 
-            help = 'Dataset type to use: neutral_aimnet2_supported, neutral_others, 
-            charged_aimnet2_supported, charged_uma_supported')
+            help = 'Dataset type to use: neutral_aimnet2_supported, neutral_others, charged_aimnet2_supported or charged_uma_supported')
     args = parser.parse_args()
 
     if args.dataset_type == 'neutral_aimnet2_supported':
@@ -41,7 +40,6 @@ def main():
         config_file = "config_charged_uma_supported.yaml"
         final_df_name = "metrics_summary_charged_uma_supported.csv"
 
-
     with open(config_file, "r") as file:
         config = yaml.safe_load(file)
 
@@ -54,10 +52,11 @@ def main():
         for model in config["models"]:
             model_type = model["type"]
             model_path = model["path"]
+            model_name = os.path.splitext(os.path.basename(model_path))[0]
 
             # run inference
             run_inference(model_type, model_path, h5_path, name)
-            csv_file = f"{model_type.upper()}_Inference_{name}_intE.csv"
+            csv_file = f"{model_name.upper()}_Inference_{name}_intE.csv"
             csv_path = os.path.join("outputs", csv_file)
     
             if not os.path.exists(csv_path):
@@ -68,12 +67,12 @@ def main():
             metrics = run_evaluation(csv_path)
             metrics["Dataset"] = name
             metrics["ModelType"] = model_type
-            metrics["ModelName"] = os.path.basename(model_path)
+            metrics["ModelName"] = model_name
             results.append(metrics)
 
     # save all results to a pandas dataframe
     final_df = pd.DataFrame(results)
-    final_df = final_df[["Dataset", "ModelType", "ModelName", "R2", "RMSE (kcal/mol)", "MAE (kcal/mol)"]]
+    final_df = final_df[["Dataset", "ModelType", "ModelName", "R2", "Pearson_R2", "RMSE (kcal/mol)", "MAE (kcal/mol)"]]
     final_df.to_csv(final_df_name, index=False)
 
 if __name__ == "__main__":

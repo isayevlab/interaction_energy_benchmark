@@ -8,9 +8,16 @@ from ase import Atoms
 from mace.calculators import mace_omol
 from typing import Dict
 import time
+import warnings
+warnings.filterwarnings(
+    "ignore",
+    message="Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected",
+    category=UserWarning,
+)
 
 class MACEOMOL_Inference:
     def __init__(self, model_path: str, h5_path: str, ds_name: str):
+        self.model_name = os.path.splitext(os.path.basename(model_path))[0]
         self.h5_path = h5_path
         self.ds_name = ds_name
         self.data_dict = self.extract_input_from_h5()
@@ -75,18 +82,18 @@ class MACEOMOL_Inference:
 
     def calculate_energies(self, data: Dict[str, np.ndarray]) -> np.ndarray:
         energies = []
-        for coord, numbers in zip(data['coord'], data['numbers']):
-            mol = self.create_molecule(coord, numbers)
-            ## Set charge and spin for the system
-            #mol.info["charge"] = 1.0      # +1 charge
-            #mol.info["spin"] = 1.0        # spin multiplicity
+        for coord, numbers, charge in zip(data['coord'], data['numbers'], data['charge']):
+            mol = self.create_molecule(coord, numbers, charge)
             mol.calc = self.calc
             energy = mol.get_potential_energy()
             energies.append(energy)
         return np.array(energies)
 
-    def create_molecule(self, coord, numbers) -> Atoms:
-        return Atoms(numbers=numbers, positions=coord)
+    def create_molecule(self, coord, numbers, charge) -> Atoms:
+        atoms = Atoms(numbers=numbers, positions=coord)
+        atoms.info['charge'] = int(charge)
+        atoms.info['spin'] = 1                  # spin multiplicity
+        return atoms
 
     def run_inference(self) -> Dict[str, pd.DataFrame]:
         start_time = time.time()
@@ -120,7 +127,7 @@ class MACEOMOL_Inference:
 
     def save_results(self, final_df: pd.DataFrame):
         os.makedirs("outputs", exist_ok=True)
-        final_df.to_csv(f'outputs/{self.__class__.__name__}_{self.ds_name}_intE.csv', index=False)
+        final_df.to_csv(f"outputs/{self.model_name.upper()}_Inference_{self.ds_name}_intE.csv", index=False)
 
 if __name__ == "__main__":
     model_path, h5_path, ds_name = sys.argv[1:4]

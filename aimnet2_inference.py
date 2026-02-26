@@ -8,12 +8,19 @@ from tqdm import tqdm
 from typing import Dict
 import time
 from torch.amp import autocast              # for mixed precision
+import warnings
+warnings.filterwarnings(
+    "ignore",
+    message="Environment variable TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD detected",
+    category=UserWarning,
+)
 
 class AIMNET2_Inference:
     BATCH_SIZE = 1000                       # adjust this for optimal GPU usage
 
     def __init__(self, model_path: str, h5_path: str, ds_name: str):
         self.model = torch.jit.load(model_path).cuda()  
+        self.model_name = os.path.splitext(os.path.basename(model_path))[0]
         self.h5_path = h5_path
         self.ds_name = ds_name
         self.data_dict = self.extract_input_from_h5()
@@ -131,7 +138,7 @@ class AIMNET2_Inference:
     
     def save_results(self, final_df: pd.DataFrame):
         os.makedirs("outputs", exist_ok=True)
-        final_df.to_csv(f'outputs/{self.__class__.__name__}_{self.ds_name}_intE.csv', index=False)
+        final_df.to_csv(f"outputs/{self.model_name.upper()}_Inference_{self.ds_name}_intE.csv", index=False)
 
 if __name__ == "__main__":
     

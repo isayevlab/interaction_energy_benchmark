@@ -2,19 +2,23 @@ import os
 import pandas as pd
 import numpy as np
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
+from scipy.stats import pearsonr
 from math import sqrt
 import argparse
 
 def evaluate_metrics(df: pd.DataFrame) -> dict:
     y_true = df['ref_energy_int']
     y_pred = df['pred_energy_int']
-
+    
     r2 = r2_score(y_true, y_pred)
     rmse = sqrt(mean_squared_error(y_true, y_pred))
     mae = mean_absolute_error(y_true, y_pred)
+    pearson_r, _ = pearsonr(y_true, y_pred)
+    pearson_r2 = pearson_r ** 2
 
     return {
         'R2': r2,
+        'Pearson_R2': pearson_r2,
         'RMSE (kcal/mol)': rmse,
         'MAE (kcal/mol)': mae
     }
@@ -31,9 +35,10 @@ def main():
     metrics = evaluate_metrics(df)
 
     print(f"\nEvaluation Results for: {os.path.basename(args.csv_path)}")
-    print(f"R²   : {metrics['R2']:.4f}")
-    print(f"RMSE : {metrics['RMSE']:.4f}")
-    print(f"MAE  : {metrics['MAE']:.4f}")
+    print(f"R²              : {metrics['R2']:.4f}")
+    print(f"Pearson's R²    : {metrics['Pearson_R2']:.4f}")
+    print(f"RMSE            : {metrics['RMSE']:.4f}")
+    print(f"MAE             : {metrics['MAE']:.4f}")
 
 if __name__ == "__main__":
     main()
