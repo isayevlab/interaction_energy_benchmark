@@ -13,6 +13,7 @@ No model training or development is included — this repo is strictly for **inf
 ├── models/                                    # Pre-trained AIMNet2/MACE-OFF/MACE-OMOL/UMA-OMOL models
 ├── outputs/                                   # Inference result csv files will be saved here
 ├── datasets.tar.gz                            # Input datasets in HDF5 format (compressed format)
+├── datasets_dft_references.tar.gz             # Datasets along with reference DFT baselines in HDF5 format (compressed format)
 ├── aimnet2_inference.py                       # AIMNet2 inference pipeline
 ├── maceoff_inference.py                       # MACE-OFF inference pipeline
 ├── maceomol_inference.py                      # MACE-OMOL inference pipeline
